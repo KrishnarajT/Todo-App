@@ -1,11 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	FlatList,
+	Button,
+} from "react-native";
 import TodoItem from "./componenets/TodoItem";
 import TodoInput from "./componenets/TodoInput";
 
 export default function App() {
 	const [todoList, setTodoList] = useState([]);
+	const [isModalOpen, setisModalOpen] = useState(false);
+
+	function startAddTodoHandler() {
+		setisModalOpen(true);
+	}
+
+	function removeModalHandler() {
+		setisModalOpen(false);
+	}
 
 	function addtodoHandler(enteredTodoList) {
 		console.log(enteredTodoList);
@@ -20,42 +35,50 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<Text
-				style={{
-					fontSize: 30,
-					fontWeight: "bold",
-					padding: 20,
-					margin: 10,
-				}}
-			>
-				Write Your To Dos!
-			</Text>
-			<TodoInput addtodoHandler={addtodoHandler} />
-			<View style={styles.todoListContainer}>
-				<FlatList
-					data={todoList}
-					renderItem={(item) => {
-						return (
-							<TodoItem
-								item={item}
-								deleteHandler={deleteTodoHandler}
-							/>
-						);
+		<>
+			<StatusBar style="auto" />
+			<View style={styles.container}>
+				<Text
+					style={{
+						fontSize: 30,
+						fontWeight: "bold",
+						padding: 20,
+						margin: 10,
 					}}
+				>
+					Write Your To Dos!
+				</Text>
+				<Button title="Add new ToDo" onPress={startAddTodoHandler} />
+				<TodoInput
+					addtodoHandler={addtodoHandler}
+					isModalOpen={isModalOpen}
+					hideModalHandler={removeModalHandler}
 				/>
+				<View style={styles.todoListContainer}>
+					<FlatList
+						data={todoList}
+						renderItem={(item) => {
+							return (
+								<TodoItem
+									item={item}
+									deleteHandler={deleteTodoHandler}
+								/>
+							);
+						}}
+					/>
+				</View>
 			</View>
-		</View>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		padding: 30,
-		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
 		flex: 1,
+		backgroundColor: "#e6b457",
 	},
 
 	todoListContainer: {

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+	View,
+	TextInput,
+	Button,
+	StyleSheet,
+	Alert,
+	Modal,
+	Image,
+} from "react-native";
 
 const TodoInput = (props) => {
 	const [enteredTodoList, setEnteredTodoList] = useState("");
 
-    function todoInputHandler(enteredText) {
-        console.log(enteredTodoList);
+	function todoInputHandler(enteredText) {
+		console.log(enteredTodoList);
 		setEnteredTodoList({
 			key: Math.random().toString(),
 			text: enteredText,
@@ -21,39 +29,68 @@ const TodoInput = (props) => {
 			return;
 		}
 		props.addtodoHandler(enteredTodoList);
-        setEnteredTodoList({
-            key: 1,
-            text: ""
-        });
+		setEnteredTodoList({
+			key: 1,
+			text: "",
+		});
 	}
 
 	return (
-		<View style={styles.inputContainer}>
-			<TextInput
-				placeholder="Write Your To Do"
-				onChangeText={todoInputHandler}
-				style={styles.textInput}
-				value={enteredTodoList.text}
-			></TextInput>
-			<Button
-				title="Add Todo"
-				style={styles.addButton}
-				onPress={addtodoHandler}
-			/>
-		</View>
+		<Modal
+			visible={props.isModalOpen}
+			animationType="slide"
+			style={styles.modal}
+		>
+			<View style={styles.inputContainer}>
+				<Image
+					source={require("../assets/images/reshot-icon-note-XJTRPA7D9V.png")}
+					style={{
+						width: 100,
+						height: 100,
+						margin: 20,
+					}}
+				/>
+				<TextInput
+					placeholder="Write Your To Do"
+					onChangeText={todoInputHandler}
+					style={styles.textInput}
+					value={enteredTodoList.text}
+				></TextInput>
+				<View
+					style={{
+						flexDirection: "row",
+						justifyContent: "center",
+						width: "60%",
+						gap: 10,
+					}}
+				>
+					<Button
+						title="Cancel"
+						style={styles.addButton}
+						onPress={props.hideModalHandler}
+					/>
+					<Button
+						title="Add Todo"
+						style={styles.addButton}
+						onPress={addtodoHandler}
+					/>
+				</View>
+			</View>
+		</Modal>
 	);
 };
 
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
-		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "center",
 		alignItems: "center",
 		margin: 5,
+		gap: 10,
 		paddingBottom: 10,
 		borderBottomColor: "black",
 		borderBottomWidth: 1,
+		// backgroundColor: "#e6b457",
 	},
 	textInput: {
 		borderColor: "black",
@@ -66,6 +103,14 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		textAlign: "center",
 	},
+	modal: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		borderColor: "black",
+		borderWidth: 55,
+	},
+
 });
 
 export default TodoInput;
