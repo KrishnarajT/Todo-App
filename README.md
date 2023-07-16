@@ -5,6 +5,15 @@ Extremely simple ToDo app made with the intention of learning basics of React Na
 
 ![](./Screenshots/Apple%20iPhone%2011%20Pro%20Max%20Presentation.png)
 
+# Installation
+
+## Development 
+Download the repository and run `npm install` to install all the dependencies. Then run `npm run start` to start the app. You can use the Expo app on your phone to scan the QR code and run the app on your phone.
+
+## Production
+Just download the apk file from the releases section and install it on your phone.
+
+
 # Functionalities
 
 1. Add a task
